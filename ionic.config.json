@@ -1,0 +1,7 @@
+{
+  "name": "Desafio-FullSatack-PokeApi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
