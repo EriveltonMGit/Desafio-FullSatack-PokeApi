@@ -1,0 +1,24 @@
+<ion-header [translucent]="true" class="header">
+  <ion-toolbar>
+    <div class="header-content">
+      <div class="icon_logo" onclick="location.href='#'">
+    <h1> POKEDEX</h1>
+      </div>
+      <div class="ul_header">
+        <ul>
+          <ion-tab-button tab="tab1" routerLink="/tabs/tab1">
+            <ion-label>Home</ion-label>
+          </ion-tab-button>
+          <ion-tab-button tab="tab2" routerLink="/tabs/tab2">
+            <ion-label>Favoritos</ion-label>
+          </ion-tab-button>
+          
+          <li>
+            <!-- Input de busca substituindo o link -->
+            <ion-searchbar placeholder="Buscar Pokémon" animated="true"></ion-searchbar>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
