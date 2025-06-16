@@ -1,0 +1,40 @@
+<app-main-header></app-main-header>
+
+<ion-content [fullscreen]="true" class="container_home">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" size-md="4" size-lg="3" *ngFor="let pokemon of pokemons">
+        <ion-card>
+          <div class="card-top-info">
+            <h2 class="pokemon-name">{{ pokemon.name }}</h2>
+            <div class="level-bar-display">
+              <span class="level-label">NÍVEL</span>
+              <ion-progress-bar [value]="pokemon.level / 100"></ion-progress-bar>
+              <span class="pokemon-level">{{ pokemon.level }}</span>
+            </div>
+            <p class="pokemon-status">Tipo: {{ pokemon.type }}</p>
+          </div>
+          <img [src]="pokemon.imageUrl" [alt]="pokemon.name" />
+
+          <div class="overlay-content">
+            <ion-card-content>
+              <p class="description">{{ pokemon.description }}</p>
+
+              <p>Altura: {{ pokemon.height / 10 }} m</p>
+              <p>Peso: {{ pokemon.weight / 10 }} kg</p>
+              <p class="tipo">Tipos: {{ pokemon.types.join(', ') | uppercase }}</p>
+            </ion-card-content>
+            <div class="card-buttons">
+              <ion-button expand="full" fill="solid" class="btn_details" [routerLink]="['/tabs/details', pokemon.id]">
+                Detalhes
+              </ion-button>
+              <ion-button expand="full" fill="outline" (click)="addPokemonToFavorites(pokemon)">
+                Adicionar aos Favoritos
+              </ion-button>
+            </div>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

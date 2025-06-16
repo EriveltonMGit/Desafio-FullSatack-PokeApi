@@ -1,8 +1,9 @@
 //  import color 
-@import '../../../theme/variables.scss';
+@use '../../../theme/variables' as *;
+
 
 .header {
-  border: 1px solid #4d4dff75;
+  border: 1px solid $border-header;
   box-shadow: 0 2px 4px rgba(128, 128, 128, 0.226);
   width: 90%;
   position: absolute;
