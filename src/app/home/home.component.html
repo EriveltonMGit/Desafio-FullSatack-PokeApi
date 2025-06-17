@@ -1,0 +1,64 @@
+<app-main-header></app-main-header>
+
+<ion-content [fullscreen]="true" class="container_home">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" size-md="4" size-lg="3" *ngFor="let pokemon of pokemons">
+        <ion-card>
+          <div class="card-top-info">
+            <h2 class="pokemon-name">{{ pokemon.name }}</h2>
+
+            <div class="level-bar-display">
+              <span class="level-label">NÍVEL</span>
+              <ion-progress-bar [value]="pokemon.level / 100"></ion-progress-bar>
+              <span class="pokemon-level">{{ pokemon.level }}</span>
+            </div>
+
+            <p class="pokemon-status">Tipo: {{ pokemon.type }}</p>
+          </div>
+
+          <img [src]="pokemon.imageUrl" [alt]="pokemon.name" />
+
+          <div class="overlay-content">
+            <ion-card-content>
+              <p class="description">{{ pokemon.description }}</p>
+              <p>Altura: {{ pokemon.height }} m</p>
+              <p>Peso: {{ pokemon.weight }} kg</p>
+              <p class="tipo">Tipos: {{ pokemon.types.join(', ') | uppercase }}</p>
+            </ion-card-content>
+
+            <div class="card-buttons">
+              <ion-button expand="full" fill="solid" class="btn_details" (click)="viewPokemonDetails(pokemon.id)">
+                Detalhes
+              </ion-button>
+              <ion-button expand="full" fill="outline" (click)="addPokemonToFavorites(pokemon)">
+                Adicionar aos Favoritos
+              </ion-button>
+            </div>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <!-- Spinner de carregamento -->
+    <ion-row class="ion-justify-content-center" *ngIf="isLoading">
+      <ion-col size="auto">
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-col>
+    </ion-row>
+
+    <!-- Botão Exibir Mais -->
+    <ion-row class="ion-justify-content-center" *ngIf="!allPokemonsLoaded && !isLoading">
+      <ion-col size="auto">
+        <ion-button expand="block" (click)="loadPokemons()">Exibir mais</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- Todos carregados -->
+    <ion-row class="ion-justify-content-center" *ngIf="allPokemonsLoaded">
+      <ion-col size="auto">
+        <p>Todos os Pokémons foram carregados.</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

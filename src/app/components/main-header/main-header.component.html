@@ -1,0 +1,34 @@
+<ion-header [translucent]="true" class="header">
+  <ion-toolbar>
+    <div class="header-content">
+      <div class="icon_logo" routerLink="/tabs/tab1">
+       
+        <ion-tab-button tab="home" routerLink="/tabs/home"> <h1>POKEDEX</h1></ion-tab-button>
+      </div>
+      <div class="ul_header">
+        <ul>
+          <li>
+            
+            <ion-tab-button tab="home" routerLink="/tabs/home">
+              <ion-label>Home</ion-label>
+            </ion-tab-button>
+          </li>
+          <!-- <li>
+           
+            <ion-tab-button tab="details" routerLink="/tabs/details">
+              <ion-label>Detalhes</ion-label>
+            </ion-tab-button>
+          </li> -->
+          <li>
+            <ion-tab-button tab="favorites" routerLink="/tabs/favorites">
+              <ion-label>Favoritos</ion-label>
+            </ion-tab-button>
+          </li>
+          <li>
+            <ion-searchbar placeholder="Buscar Pokémon" animated="true"></ion-searchbar>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
