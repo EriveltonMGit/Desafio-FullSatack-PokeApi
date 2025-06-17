@@ -123,3 +123,123 @@
   padding: 20px;
   color: var(--ion-color-medium);
 }
+
+
+/* --- Media Query --- */
+
+@media (max-width: 480px) {
+  .details-container {
+    padding: 0.5rem;
+    margin-top: 15%;
+  }
+
+  .pokemon-image-col,
+  .pokemon-details-col {
+    padding: 5px;
+  }
+
+  .pokemon-image-card {
+    border-radius: 8px;
+    flex-direction: column; /* Organiza a imagem e o botão em coluna */
+    .pokemon-detail-image {
+      padding: 5px;
+    }
+    .btn_home { /* Aplica estilos ao botão DENTRO do pokemon-image-card */
+      position: relative; /* Remove o posicionamento absoluto para fluir com o conteúdo */
+      bottom: auto;
+      left: auto;
+      transform: none;
+      width: 95%; /* Ajuste a largura conforme necessário */
+      margin-top: 10px; /* Espaçamento entre a imagem e o botão */
+      margin-bottom: 10px; /* Espaçamento abaixo do botão */
+      height: 5vh;
+    }
+  }
+
+  .pokemon-details-card {
+    height: auto;
+    min-height: 50vh;
+    max-height: 80vh;
+    ion-card-content {
+      padding: 15px;
+
+      .pokemon-name-detail {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+      }
+
+      ion-item {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        ion-label {
+          p {
+            font-size: 0.9em;
+          }
+          h3 {
+            font-size: 1em;
+            margin-top: 10px;
+            margin-bottom: 3px;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 320px) {
+  .details-container {
+    padding: 0.5rem;
+    margin-top: 15%;
+  }
+
+  .pokemon-image-col,
+  .pokemon-details-col {
+    padding: 5px;
+  }
+
+  .pokemon-image-card {
+    border-radius: 8px;
+    flex-direction: column; /* Organiza a imagem e o botão em coluna */
+    .pokemon-detail-image {
+      padding: 5px;
+    }
+    .btn_home { /* Aplica estilos ao botão DENTRO do pokemon-image-card */
+      position: relative; /* Remove o posicionamento absoluto para fluir com o conteúdo */
+      bottom: auto;
+      left: auto;
+      transform: none;
+      width: 95%; /* Ajuste a largura conforme necessário */
+      margin-top: 10px; /* Espaçamento entre a imagem e o botão */
+      margin-bottom: 10px; /* Espaçamento abaixo do botão */
+      height: 5vh;
+    }
+  }
+
+  .pokemon-details-card {
+    height: auto;
+    min-height: 50vh;
+    max-height: 80vh;
+    ion-card-content {
+      padding: 15px;
+
+      .pokemon-name-detail {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+      }
+
+      ion-item {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        ion-label {
+          p {
+            font-size: 0.9em;
+          }
+          h3 {
+            font-size: 1em;
+            margin-top: 10px;
+            margin-bottom: 3px;
+          }
+        }
+      }
+    }
+  }
+}

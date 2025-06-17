@@ -1,5 +1,6 @@
+// src/app/components/main-header/main-header.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router'; // JÁ ESTÁ CORRETO AQUI
 import { CommonModule } from '@angular/common';
 import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, catchError, map } from 'rxjs/operators';
@@ -10,18 +11,20 @@ import {
   IonSearchbar,
   IonLabel,
   IonTabButton,
-  IonList,
-  IonItem,
   IonAvatar,
   IonText,
   IonSpinner,
-  IonContent,
-  IonTitle
+  IonMenuButton,
+  IonIcon,
+  IonList, // Adicionei IonList aqui, pois você usa no HTML do main-header
+  IonItem, // Adicionei IonItem aqui, pois você usa no HTML do main-header
 } from '@ionic/angular/standalone';
 
-import { PokemonService } from '../../Services/pokemon/pokemon.component';
+import { PokemonService } from '../../Services/pokemon/pokemon.service';
 import { Pokemon } from '../../Types/pokemon';
 import { HttpClientModule } from '@angular/common/http';
+import { addIcons } from 'ionicons';
+import { home, star, search } from 'ionicons/icons';
 
 @Component({
   selector: 'app-main-header',
@@ -32,21 +35,21 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     IonTabButton,
     IonLabel,
-    RouterModule,
+    RouterModule, // ESTÁ CORRETO
     IonHeader,
     IonToolbar,
     IonSearchbar,
-    IonList,
-    IonItem,
     IonAvatar,
     IonText,
     IonSpinner,
-    HttpClientModule
-],
+    HttpClientModule,
+    IonMenuButton,
+    IonList, // Adicionei
+    IonItem, // Adicionei
+  ],
   providers: [PokemonService]
 })
 export class MainHeaderComponent implements OnInit, OnDestroy {
-
   searchResults: Pokemon[] = [];
   searchLoading: boolean = false;
   public searchTerms = new Subject<string>();
@@ -54,7 +57,9 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
 
   private searchSubscription: Subscription | undefined;
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(private pokemonService: PokemonService) {
+    addIcons({ home, star, search });
+  }
 
   ngOnInit() {
     this.searchSubscription = this.searchTerms.pipe(
