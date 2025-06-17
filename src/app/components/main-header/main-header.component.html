@@ -1,6 +1,10 @@
 <ion-header [translucent]="true" class="header">
   <ion-toolbar>
     <div class="header-content">
+      <div class="menu-button-container mobile-only">
+        <ion-menu-button auto-hide="false" content-id="main-content"></ion-menu-button>
+      </div>
+
       <div class="icon_logo" routerLink="/tabs/home">
         <ion-tab-button tab="home" routerLink="/tabs/home">
           <h1>POKEDEX</h1>
@@ -9,25 +13,20 @@
 
       <div class="ul_header">
         <ul>
-          <li>
+          <li class="desktop-only">
             <ion-tab-button tab="home" routerLink="/tabs/home">
               <ion-label>Home</ion-label>
             </ion-tab-button>
           </li>
-          <li>
+          <li class="desktop-only">
             <ion-tab-button tab="favorites" routerLink="/tabs/favorites">
               <ion-label>Favoritos</ion-label>
             </ion-tab-button>
           </li>
 
           <li class="search-container">
-            <ion-searchbar
-              placeholder="Buscar Pokémon"
-              animated="true"
-              (ionInput)="onSearchChange($event)"
-              (ionClear)="clearSearch()"
-              (ionCancel)="clearSearch()"
-            ></ion-searchbar>
+            <ion-searchbar placeholder="Buscar Pokémon" animated="true" (ionInput)="onSearchChange($event)"
+              (ionClear)="clearSearch()" (ionCancel)="clearSearch()"></ion-searchbar>
           </li>
         </ul>
       </div>

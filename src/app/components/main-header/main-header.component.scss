@@ -212,3 +212,116 @@ ion-content {
   text-align: center;
   color: #333;
 }
+
+.mobile-only {
+  display: none; /* Hidden by default */
+}
+
+
+
+@media (max-width: 480px) {
+  .header {
+    width: 96%;
+    left: 2%;
+    height: 50px;
+    top: 0.5%;
+    padding: 0 10px;
+    justify-content: space-between; /* Distribute items with space */
+  }
+
+  .header-content {
+    padding: 0; /* Remove internal padding here, let children handle it */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space out logo, menu, search */
+  }
+
+  .menu-button-container {
+    display: flex; /* Show the menu button container */
+    align-items: center;
+    justify-content: flex-start;
+    padding-right: 8px; /* Add some space between menu button and logo */
+  }
+
+  .mobile-only {
+    display: flex; /* Show elements marked as mobile-only */
+  }
+
+  .desktop-only {
+    display: none; /* Hide elements marked as desktop-only */
+  }
+
+  .icon_logo {
+    width: auto; /* Let content dictate width */
+    flex-grow: 1; /* Allow logo to take available space */
+    min-width: unset;
+    height: 35px;
+    justify-content: center; /* Center the logo text if it's the only item */
+    h1 {
+      font-size: 18px;
+    }
+  }
+
+  .ul_header {
+    width: auto; /* Adjust width, primarily holds search bar */
+    flex-grow: 0; /* Don't let it grow too much */
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+    margin-left: auto; /* Push it to the right */
+
+    ul {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+    }
+
+    /* We already hid these with .desktop-only, but good to be explicit for safety */
+    ul li:nth-child(1),
+    ul li:nth-child(2) {
+      display: none;
+    }
+
+    ion-searchbar {
+      width: 100%;
+      --padding-start: 0px;
+      --padding-end: 0px;
+      height: 30px;
+     
+      --placeholder-color: #666;
+      .searchbar-input {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+         font-size: 12px;
+      }
+    }
+  }
+
+  .search-container {
+    min-width: 120px; 
+    flex-grow: 1; 
+  }
+
+  .search-results-wrapper {
+    top: 60px;
+    left: 2%;
+    right: 2%;
+    width: 96%;
+  }
+
+  .search-results-list,
+  .search-loading-spinner,
+  .no-results-message {
+    width: 100%;
+  }
+
+  ion-content {
+    padding-top: 60px;
+    padding-bottom: 0;
+  }
+}
