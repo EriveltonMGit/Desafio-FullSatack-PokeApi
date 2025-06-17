@@ -3,7 +3,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { PokemonService } from './pokemon.component'; // Garanta que este caminho está correto para o seu serviço
+import { PokemonService } from './pokemon.service'; // Garanta que este caminho está correto para o seu serviço
 import { Pokemon } from '../../Types/pokemon'; // Garanta que este caminho está correto para a sua interface Pokemon
 
 describe('PokemonService', () => { // O 'describe' deve ser para o SERVIÇO, não 'PokemonComponent'

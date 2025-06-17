@@ -40,7 +40,7 @@ import { star, starOutline } from 'ionicons/icons'; // Adicione starOutline
     IonCardContent,
     IonButton,
    
-    IonIcon // Adicione IonIcon
+    IonIcon 
   ],
 })
 export class FavoritesComponent implements OnInit, OnDestroy {

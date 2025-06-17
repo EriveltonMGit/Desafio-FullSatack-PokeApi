@@ -19,7 +19,7 @@ import {
   IonTitle
 } from '@ionic/angular/standalone';
 
-import { PokemonService } from '../../Services/pokemon/pokemon.component';
+import { PokemonService } from '../../Services/pokemon/pokemon.service';
 import { Pokemon } from '../../Types/pokemon';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -42,7 +42,7 @@ import { HttpClientModule } from '@angular/common/http';
     IonText,
     IonSpinner,
     HttpClientModule
-],
+  ],
   providers: [PokemonService]
 })
 export class MainHeaderComponent implements OnInit, OnDestroy {

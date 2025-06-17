@@ -19,10 +19,11 @@ import {
   IonCardContent,
   IonLabel,
   IonItem,
-  IonList, IonTabButton } from '@ionic/angular/standalone';
+  IonList, IonTabButton
+} from '@ionic/angular/standalone';
 
 import { MainHeaderComponent } from "../components/main-header/main-header.component";
-import { PokemonService } from '../Services/pokemon/pokemon.component'; // Importe o serviço
+import { PokemonService } from '../Services/pokemon/pokemon.service'; // Importe o serviço
 import { Pokemon } from '../Types/pokemon'; // Importe a interface do Pokémon
 import { HttpClientModule } from '@angular/common/http';
 @Component({
@@ -30,9 +31,9 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './main-details.component.html',
   styleUrls: ['./main-details.component.scss'],
   standalone: true,
-  imports: [IonTabButton, 
+  imports: [IonTabButton,
     CommonModule,
-    MainHeaderComponent, 
+    MainHeaderComponent,
     IonContent,
     IonGrid,
     IonRow,
@@ -48,7 +49,7 @@ import { HttpClientModule } from '@angular/common/http';
     IonList,
     HttpClientModule
   ],
-  providers: [PokemonService] 
+  providers: [PokemonService]
 })
 export class MainDetailsComponent implements OnInit, OnDestroy {
   pokemon: Pokemon | undefined;

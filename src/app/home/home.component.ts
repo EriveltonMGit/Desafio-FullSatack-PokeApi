@@ -22,7 +22,7 @@ import { addIcons } from 'ionicons';
 import { star, starOutline } from 'ionicons/icons';
 
 import { Pokemon } from '../Types/pokemon';
-import { PokemonService } from '../Services/pokemon/pokemon.component';
+import { PokemonService } from '../Services/pokemon/pokemon.service';
 import { FavoriteService } from '../Services/favorites/favorite.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Subscription } from 'rxjs';
