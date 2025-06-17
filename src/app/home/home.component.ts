@@ -13,16 +13,19 @@ import {
   IonCardContent,
   IonButton,
   IonProgressBar,
-  IonSpinner // Import IonSpinner for loading indicator
+  IonSpinner,
+  ToastController,
+  IonIcon // <-- ADD THIS IMPORT
 } from "@ionic/angular/standalone";
 
 import { addIcons } from 'ionicons';
-import { star } from 'ionicons/icons';
+import { star, starOutline } from 'ionicons/icons';
 
 import { Pokemon } from '../Types/pokemon';
-import { PokemonService } from '../Services/pokemon/pokemon.component'; // Ensure path is correct
+import { PokemonService } from '../Services/pokemon/pokemon.component';
+import { FavoriteService } from '../Services/favorites/favorite.service';
 import { HttpClientModule } from '@angular/common/http';
-import { Subscription } from 'rxjs'; // Import Subscription to manage subscriptions
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -42,88 +45,105 @@ import { Subscription } from 'rxjs'; // Import Subscription to manage subscripti
     MainHeaderComponent,
     IonProgressBar,
     HttpClientModule,
-    IonSpinner
+    IonSpinner,
+    IonIcon // <-- AND ADD IT HERE IN THE IMPORTS ARRAY
   ],
   providers: [PokemonService]
 })
-export class HomeComponent implements OnInit, OnDestroy { // Add OnDestroy for proper cleanup
+export class HomeComponent implements OnInit, OnDestroy {
 
   pokemons: Pokemon[] = [];
-  currentPage: number = 0; // Tracks the current page/offset
-  pokemonsPerPage: number = 20; // Number of Pokemons to load per request
-  isLoading: boolean = false; // To show/hide loading spinner
-  allPokemonsLoaded: boolean = false; // To disable "Load More" button when no more data
+  currentPage: number = 0;
+  pokemonsPerPage: number = 20;
+  isLoading: boolean = false;
+  allPokemonsLoaded: boolean = false;
 
-  private pokemonSubscription: Subscription | undefined; // To manage observable subscription
+  private pokemonSubscription: Subscription | undefined;
+  private favoritesSubscription: Subscription | undefined;
+  favoritePokemonIds: Set<number> = new Set();
 
   constructor(
     private router: Router,
-    private pokemonService: PokemonService
+    private pokemonService: PokemonService,
+    private favoriteService: FavoriteService,
+    private toastController: ToastController
   ) {
-    addIcons({ star }); // Initialize Ionicons
+    addIcons({ star, starOutline });
   }
 
   ngOnInit() {
-    this.loadPokemons(); // Load initial set of Pokemons when component initializes
+    this.loadPokemons();
+    this.subscribeToFavorites();
   }
 
-  /**
-   * Loads Pokemons from the API using the service, appending to the existing list.
-   * Manages loading state and checks if all Pokemons have been loaded.
-   */
+  ngOnDestroy() {
+    if (this.pokemonSubscription) {
+      this.pokemonSubscription.unsubscribe();
+    }
+    if (this.favoritesSubscription) {
+      this.favoritesSubscription.unsubscribe();
+    }
+  }
+
   loadPokemons() {
     if (this.isLoading || this.allPokemonsLoaded) {
-      return; // Prevent multiple simultaneous calls or calls when all data is loaded
+      return;
     }
 
-    this.isLoading = true; // Show loading spinner
-
-    // Calculate the offset based on the current page
+    this.isLoading = true;
     const offset = this.currentPage * this.pokemonsPerPage;
 
     this.pokemonSubscription = this.pokemonService.getPokemons(this.pokemonsPerPage, offset).subscribe({
       next: (newPokemons: Pokemon[]) => {
         if (newPokemons.length > 0) {
-          this.pokemons = [...this.pokemons, ...newPokemons]; // Append new Pokemons to the existing list
-          this.currentPage++; // Increment page for the next load
+          this.pokemons = [...this.pokemons, ...newPokemons];
+          this.currentPage++;
           console.log('Pokemons loaded:', this.pokemons);
         } else {
-          this.allPokemonsLoaded = true; // No more Pokemons to load, mark as all loaded
+          this.allPokemonsLoaded = true;
           console.log('All Pokemons have been loaded.');
         }
-        this.isLoading = false; // Hide loading spinner
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error loading Pokemons:', error);
-        this.isLoading = false; // Hide loading spinner even on error
+        this.isLoading = false;
       }
     });
   }
 
-  /**
-   * Cleans up the subscription when the component is destroyed to prevent memory leaks.
-   */
-  ngOnDestroy() {
-    if (this.pokemonSubscription) {
-      this.pokemonSubscription.unsubscribe(); // Unsubscribe to prevent memory leaks
+  private subscribeToFavorites(): void {
+    this.favoritesSubscription = this.favoriteService.favorites$.subscribe(favorites => {
+      this.favoritePokemonIds = new Set(favorites.map(fav => fav.id));
+    });
+  }
+
+  async toggleFavorite(pokemon: Pokemon) {
+    if (this.favoriteService.isFavorite(pokemon.id)) {
+      this.favoriteService.removeFavorite(pokemon.id);
+      await this.presentToast(`${pokemon.name} removido dos favoritos!`, 'danger');
+    } else {
+      this.favoriteService.addFavorite(pokemon);
+      await this.presentToast(`${pokemon.name} adicionado aos favoritos!`, 'success');
     }
   }
 
-  /**
-   * Handles adding a Pokemon to favorites (console log and alert for now).
-   * @param pokemon The Pokemon object to add.
-   */
-  addPokemonToFavorites(pokemon: Pokemon) {
-    console.log('Adding to favorites:', pokemon.name);
-    alert(`${pokemon.name} added to favorites!`); // Simple alert for user feedback
+  isPokemonFavorite(pokemonId: number): boolean {
+    return this.favoriteService.isFavorite(pokemonId);
   }
 
-  /**
-   * Navigates to the Pokemon details page using its ID.
-   * @param pokemonId The ID of the Pokemon to view details for.
-   */
+  async presentToast(message: string, color: string = 'primary') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom',
+      color: color
+    });
+    toast.present();
+  }
+
   viewPokemonDetails(pokemonId: number) {
-    console.log('Clicked Details for Pokemon ID:', pokemonId); // Debugging log
-    this.router.navigate(['/tabs/details', pokemonId]); // Navigate to the details route
+    console.log('Clicked Details for Pokemon ID:', pokemonId);
+    this.router.navigate(['/tabs/details', pokemonId]);
   }
 }

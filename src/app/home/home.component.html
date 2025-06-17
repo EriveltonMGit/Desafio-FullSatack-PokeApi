@@ -31,8 +31,14 @@
               <ion-button expand="full" fill="solid" class="btn_details" (click)="viewPokemonDetails(pokemon.id)">
                 Detalhes
               </ion-button>
-              <ion-button expand="full" fill="outline" (click)="addPokemonToFavorites(pokemon)">
-                Adicionar aos Favoritos
+              <ion-button
+                expand="full"
+                [fill]="isPokemonFavorite(pokemon.id) ? 'solid' : 'outline'"
+                [color]="isPokemonFavorite(pokemon.id) ? 'warning' : 'primary'"
+                (click)="toggleFavorite(pokemon)"
+              >
+                <ion-icon slot="start" [name]="isPokemonFavorite(pokemon.id) ? 'star' : 'star-outline'"></ion-icon>
+                {{ isPokemonFavorite(pokemon.id) ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos' }}
               </ion-button>
             </div>
           </div>
