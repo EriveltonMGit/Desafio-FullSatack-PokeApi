@@ -1,5 +1,77 @@
 <app-main-header></app-main-header>
 
-<p>
-  main-details works!
-</p>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div *ngIf="isLoading" class="loading-spinner">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando detalhes do Pokémon...</p>
+  </div>
+
+  <ion-grid *ngIf="!isLoading && pokemon" class="details-container">
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="12" size-md="6" class="pokemon-image-col">
+        <ion-card class="pokemon-image-card">
+          <ion-img [src]="pokemon.imageUrl" [alt]="pokemon.name" class="pokemon-detail-image"></ion-img>
+        </ion-card>
+        <ion-tab-button tab="home" routerLink="/tabs/home" class="btn_home">
+          <ion-label>Voltar</ion-label>
+        </ion-tab-button>
+      </ion-col>
+
+      <ion-col size="12" size-md="6" class="pokemon-details-col">
+        <ion-card class="pokemon-details-card">
+          <ion-card-content>
+            <ion-text>
+              <h1 class="pokemon-name-detail">{{ pokemon.name }}</h1>
+            </ion-text>
+
+            <ion-list lines="none">
+              <ion-item>
+                <ion-label>
+                  <p><strong>ID:</strong> #{{ pokemon.id }}</p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <p><strong>Tipo:</strong> {{ pokemon.type }}</p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <p><strong>Tipos:</strong> {{ pokemon.types.join(', ') | uppercase }}</p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <p><strong>Altura:</strong> {{ pokemon.height }} m</p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <p><strong>Peso:</strong> {{ pokemon.weight }} kg</p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <p><strong>Nível:</strong> {{ pokemon.level }}</p>
+                  <ion-progress-bar [value]="pokemon.level / 100"></ion-progress-bar>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h3>Descrição:</h3>
+                  <p class="pokemon-description-text">{{ pokemon.description }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="!isLoading && !pokemon" class="no-data-message">
+    <ion-text color="medium">
+      <p>Nenhum detalhe de Pokémon encontrado.</p>
+    </ion-text>
+  </div>
+</ion-content>
