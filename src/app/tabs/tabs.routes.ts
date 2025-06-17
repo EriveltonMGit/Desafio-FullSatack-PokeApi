@@ -17,7 +17,7 @@ export const routes: Routes = [
           import('../favorites/favorites.component').then((m) => m.FavoritesComponent),
       },
       {
-        path: 'details', 
+        path: 'details/:id', // Adicionado ':id' para capturar o parâmetro do Pokémon
         loadComponent: () =>
           import('../details/main-details.component').then((m) => m.MainDetailsComponent),
       },

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/home/home.component.ts
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { MainHeaderComponent } from "../components/main-header/main-header.component";
@@ -42,14 +43,14 @@ import { Subscription } from 'rxjs'; // Import Subscription to manage subscripti
     IonProgressBar,
     HttpClientModule,
     IonSpinner
-],
+  ],
   providers: [PokemonService]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy { // Add OnDestroy for proper cleanup
 
   pokemons: Pokemon[] = [];
   currentPage: number = 0; // Tracks the current page/offset
-  pokemonsPerPage: number = 20; // Number of Pokemons to load per request (changed from 10 to 20)
+  pokemonsPerPage: number = 20; // Number of Pokemons to load per request
   isLoading: boolean = false; // To show/hide loading spinner
   allPokemonsLoaded: boolean = false; // To disable "Load More" button when no more data
 
@@ -59,11 +60,11 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private pokemonService: PokemonService
   ) {
-    addIcons({ star });
+    addIcons({ star }); // Initialize Ionicons
   }
 
   ngOnInit() {
-    this.loadPokemons(); // Load initial set of Pokemons
+    this.loadPokemons(); // Load initial set of Pokemons when component initializes
   }
 
   /**
@@ -83,17 +84,17 @@ export class HomeComponent implements OnInit {
     this.pokemonSubscription = this.pokemonService.getPokemons(this.pokemonsPerPage, offset).subscribe({
       next: (newPokemons: Pokemon[]) => {
         if (newPokemons.length > 0) {
-          this.pokemons = [...this.pokemons, ...newPokemons]; // Append new Pokemons
+          this.pokemons = [...this.pokemons, ...newPokemons]; // Append new Pokemons to the existing list
           this.currentPage++; // Increment page for the next load
-          console.log('Pokémons carregados:', this.pokemons);
+          console.log('Pokemons loaded:', this.pokemons);
         } else {
-          this.allPokemonsLoaded = true; // No more Pokemons to load
-          console.log('Todos os Pokémons foram carregados.');
+          this.allPokemonsLoaded = true; // No more Pokemons to load, mark as all loaded
+          console.log('All Pokemons have been loaded.');
         }
         this.isLoading = false; // Hide loading spinner
       },
       error: (error) => {
-        console.error('Erro ao carregar Pokémons:', error);
+        console.error('Error loading Pokemons:', error);
         this.isLoading = false; // Hide loading spinner even on error
       }
     });
@@ -104,16 +105,25 @@ export class HomeComponent implements OnInit {
    */
   ngOnDestroy() {
     if (this.pokemonSubscription) {
-      this.pokemonSubscription.unsubscribe();
+      this.pokemonSubscription.unsubscribe(); // Unsubscribe to prevent memory leaks
     }
   }
 
+  /**
+   * Handles adding a Pokemon to favorites (console log and alert for now).
+   * @param pokemon The Pokemon object to add.
+   */
   addPokemonToFavorites(pokemon: Pokemon) {
-    console.log('Adicionar aos favoritos:', pokemon.name);
-    alert(`${pokemon.name} adicionado aos favoritos!`);
+    console.log('Adding to favorites:', pokemon.name);
+    alert(`${pokemon.name} added to favorites!`); // Simple alert for user feedback
   }
 
+  /**
+   * Navigates to the Pokemon details page using its ID.
+   * @param pokemonId The ID of the Pokemon to view details for.
+   */
   viewPokemonDetails(pokemonId: number) {
-    this.router.navigate(['/tabs/details', pokemonId]);
+    console.log('Clicked Details for Pokemon ID:', pokemonId); // Debugging log
+    this.router.navigate(['/tabs/details', pokemonId]); // Navigate to the details route
   }
 }

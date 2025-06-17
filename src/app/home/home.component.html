@@ -40,21 +40,18 @@
       </ion-col>
     </ion-row>
 
-    <!-- Spinner de carregamento -->
     <ion-row class="ion-justify-content-center" *ngIf="isLoading">
       <ion-col size="auto">
         <ion-spinner name="crescent"></ion-spinner>
       </ion-col>
     </ion-row>
 
-    <!-- Botão Exibir Mais -->
     <ion-row class="ion-justify-content-center" *ngIf="!allPokemonsLoaded && !isLoading">
       <ion-col size="auto">
         <ion-button expand="block" (click)="loadPokemons()">Exibir mais</ion-button>
       </ion-col>
     </ion-row>
 
-    <!-- Todos carregados -->
     <ion-row class="ion-justify-content-center" *ngIf="allPokemonsLoaded">
       <ion-col size="auto">
         <p>Todos os Pokémons foram carregados.</p>
