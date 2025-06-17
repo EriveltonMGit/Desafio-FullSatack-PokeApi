@@ -1,14 +1,12 @@
-//  import color 
 @use '../../../theme/variables' as *;
-
 
 .header {
   border: 1px solid $border-header;
   box-shadow: 0 2px 4px rgba(128, 128, 128, 0.226);
   width: 90%;
   position: absolute;
-  margin-left: 5%;
-  margin-top: 1%;
+  top: 1%;
+  left: 5%;
   border-radius: 10px;
   backdrop-filter: blur(8px);
   overflow: hidden;
@@ -17,6 +15,7 @@
   justify-content: center;
   height: var(--ion-toolbar-height, 56px);
   background-color: rgba(255, 255, 255, 0.5);
+  z-index: 100;
 }
 
 ion-toolbar {
@@ -51,6 +50,14 @@ ion-toolbar {
   font-size: 1.2em;
   cursor: pointer;
   text-decoration: none;
+  ion-tab-button{
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  
+    margin-top: 0;
+  }
 
   h1 {
     color: $header-gradient;
@@ -58,7 +65,8 @@ ion-toolbar {
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 1.2em;
+  
+    font-size: 22px;
     cursor: pointer;
     text-decoration: none;
     background-image: $header-gradient;
@@ -93,10 +101,9 @@ ion-toolbar {
 .ul_header ul li {
   display: flex;
   align-items: center;
- 
 }
 
-.ul_header ion-label{
+.ul_header ion-label {
   text-decoration: none;
   color: $secundery-color;
   font-weight: bold;
@@ -104,7 +111,6 @@ ion-toolbar {
   padding: 5px 10px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,7 +119,6 @@ ion-toolbar {
 
 .ul_header ion-label:hover {
   background-color: rgba(77, 77, 255, 0.1);
-  
 }
 
 .ul_header ion-searchbar {
@@ -133,17 +138,77 @@ ion-toolbar {
   padding-right: 10px !important;
 }
 
+.search-container {
+  z-index: 101;
+  min-width: 200px;
+}
+
+.search-results-wrapper {
+  position: absolute;
+  top: 70px;
+  left: auto;
+  right: 5%;
+  width: min(70%, 200px);
+  z-index: 1010;
+}
+
+.search-results-list {
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: var(--ion-color-light);
+  border: 1px solid var(--ion-color-medium-tint);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  margin: 0;
+}
+
+.search-results-list ion-item {
+  --background: var(--ion-color-light);
+  --border-color: var(--ion-color-light-shade);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.search-results-list ion-item:hover {
+  --background: var(--ion-color-light-tint);
+}
+
+.pokemon-search-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+.search-loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: var(--ion-color-light);
+  border: 1px solid var(--ion-color-medium-tint);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 102;
+  color: var(--ion-color-primary);
+}
+
+.no-results-message {
+  text-align: center;
+  padding: 10px;
+  background: var(--ion-color-light);
+  border: 1px solid var(--ion-color-medium-tint);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: var(--ion-color-medium);
+  z-index: 1020;
+}
+
 ion-content {
   --background: #f0f2f5;
   padding-top: 80px;
   text-align: center;
   color: #333;
-}
-
-app-explore-container {
-  padding: 20px;
-  background: #fff;
-  border-radius: 10px;
-  margin: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

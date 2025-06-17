@@ -1,34 +1,59 @@
 <ion-header [translucent]="true" class="header">
   <ion-toolbar>
     <div class="header-content">
-      <div class="icon_logo" routerLink="/tabs/tab1">
-       
-        <ion-tab-button tab="home" routerLink="/tabs/home"> <h1>POKEDEX</h1></ion-tab-button>
+      <div class="icon_logo" routerLink="/tabs/home">
+        <ion-tab-button tab="home" routerLink="/tabs/home">
+          <h1>POKEDEX</h1>
+        </ion-tab-button>
       </div>
+
       <div class="ul_header">
         <ul>
           <li>
-            
             <ion-tab-button tab="home" routerLink="/tabs/home">
               <ion-label>Home</ion-label>
             </ion-tab-button>
           </li>
-          <!-- <li>
-           
-            <ion-tab-button tab="details" routerLink="/tabs/details">
-              <ion-label>Detalhes</ion-label>
-            </ion-tab-button>
-          </li> -->
           <li>
             <ion-tab-button tab="favorites" routerLink="/tabs/favorites">
               <ion-label>Favoritos</ion-label>
             </ion-tab-button>
           </li>
-          <li>
-            <ion-searchbar placeholder="Buscar Pokémon" animated="true"></ion-searchbar>
+
+          <li class="search-container">
+            <ion-searchbar
+              placeholder="Buscar Pokémon"
+              animated="true"
+              (ionInput)="onSearchChange($event)"
+              (ionClear)="clearSearch()"
+              (ionCancel)="clearSearch()"
+            ></ion-searchbar>
           </li>
         </ul>
       </div>
     </div>
   </ion-toolbar>
 </ion-header>
+
+<div class="search-results-wrapper" *ngIf="currentSearchValue.length > 0">
+  <ion-list *ngIf="searchResults.length > 0 && !searchLoading" class="search-results-list">
+    <ion-item *ngFor="let pokemon of searchResults" routerLink="/tabs/details/{{pokemon.id}}" (click)="clearSearch()">
+      <ion-avatar slot="start">
+        <img [src]="pokemon.imageUrl" [alt]="pokemon.name" class="pokemon-search-img" />
+      </ion-avatar>
+      <ion-label>
+        <ion-text>
+          <h2>{{ pokemon.name }}</h2>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="searchLoading" class="search-loading-spinner">
+    <ion-spinner name="dots"></ion-spinner>
+  </div>
+
+  <div *ngIf="!searchLoading && searchResults.length === 0" class="no-results-message">
+    <p>Nenhum Pokémon encontrado.</p>
+  </div>
+</div>
