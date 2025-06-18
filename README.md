@@ -30,10 +30,9 @@ https://trello.com/invite/b/685019a79c1b4d9e17d63d49/ATTI83e8e3a0ba4b930017f8617
 
 ### Backend
 
-npm install
-Crie um arquivo .env com o conteúdo:
+npm install    
+Crie um arquivo .env com o conteúdo:  FRONTEND_URL=http://localhost:8100  
 
-FRONTEND_URL=http://localhost:8100    
 Inicie o servidor:  node server.js    
 O backend estará disponível em: http://localhost:3000
 
